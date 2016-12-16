@@ -12,8 +12,10 @@ class cis_rhel7::rule::rule_1_7 {
 $issuenet = '/etc/issue.net'
 $issue = '/etc/issue'
 $motdfile =  '/etc/motd'
-$issuecontent = 'Authorized uses only. All activity may be monitored and reported.'
-$motdcontent = 'Authorized uses only. All activity may be monitored and reported.'
+$issuecontent = 'Authorized uses only. All activity may be monitored and reported.
+'
+$motdcontent = 'Authorized uses only. All activity may be monitored and reported.
+'
 
 #1.7.1.1 + 1.7.1.4
 file {"${motdfile}" :

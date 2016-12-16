@@ -55,7 +55,7 @@ file { "(6.1.6) - /etc/passwd-: ownership & permissions":
   path    => '/etc/passwd-',
   owner   => 'root',
   group   => 'root',
-  mode    => '0644',
+  mode    => '0600',
 }
 
 file { "(6.1.7) - /etc/shadow-: ownership & permissions":
@@ -63,7 +63,7 @@ file { "(6.1.7) - /etc/shadow-: ownership & permissions":
   path    => '/etc/shadow-',
   owner   => 'root',
   group   => 'root',
-  mode    => '0644',
+  mode    => '0600',
 }
 
 file { "(6.1.8) - /etc/group-: ownership & permissions":
@@ -71,7 +71,7 @@ file { "(6.1.8) - /etc/group-: ownership & permissions":
   path    => '/etc/group-',
   owner   => 'root',
   group   => 'root',
-  mode    => '0644',
+  mode    => '0600',
 }
 
 file { "(6.1.9) - /etc/gshadow-: ownership & permissions":
@@ -79,7 +79,7 @@ file { "(6.1.9) - /etc/gshadow-: ownership & permissions":
   path    => '/etc/gshadow-',
   owner   => 'root',
   group   => 'root',
-  mode    => '0644',
+  mode    => '0600',
 }
 
 notify{"NOT USED 6.1.10 Ensure no world writable files exist":}

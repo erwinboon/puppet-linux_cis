@@ -103,65 +103,15 @@ file { '(1.1.2) "/tmp" properties':
   group  => 'root',
 }
 
-mount { '(1.1.3 - 1.1.5) /tmp is mounted + (1.1.8 - 1.1.10) /var/tmp is mounted':
-  name    => '/tmp',
-  ensure  => 'mounted',
-  device  => '/tmp',
-  fstype  => 'tmpfs',
-  options => 'nodev,nosuid,noexec'
-}
-  
-file_line { '(1.1.6) /var is mounted':
-    ensure  => present,
-    path    => '/etc/fstab',
-    line    => '<volume>  /var  <fstype>  nodev 0 0',
-    match   => '\*/var',
-}
-
-mount { '(1.1.7) /var/tmp is bound to /tmp':
-  name    => '/var/tmp',
-  ensure  => 'mounted',
-  device  => '/tmp',
-  fstype  => 'none',
-  options => 'bind',
-}
-
-file_line { '(1.1.11) /var/log is separate mount':
-  path  => '/etc/fstab',
-  line  => '<volume>  /var/log  <fstype> nodev 0 0',
-  match => '\*/var/log\*nodev',
-}
-
-file_line { '(1.1.12) /var/log/audit is separate mount':
-  path  => '/etc/fstab',
-  line  => '<volume>  /var/log/audit  <fstype> nodev 0 0',
-  match => '\*/var/log/audit',
-}
-
-file_line { '(1.1.13 - 1.1.14) /home is separate mount':
-  path  => '/etc/fstab',
-  line  => '<volume> /home <fstype>  nodev 0 0',
-  match => '\*/home\*nodev',
-}
-  
-file_line { '(1.1.15) /dev/shm - nodev':
-  path  => '/etc/fstab',
-  line  => '<volume>  /dev/shm  <fstype> nodev 0 0',
-  match => '\*/dev/shm\*nodev',
-}
-
-file_line { '(1.1.16) /dev/shm - nosuid':
-  path  => '/etc/fstab',
-  line  => '<volume>  /dev/shm  <fstype> nosuid 0 0',
-  match => '\*/dev/shm\*nosuid',
-}
-
-file_line { '(1.1.17) /dev/shm - noexec':
-  path  => '/etc/fstab',
-  line  => '<volume> /dev/shm <fstype>  noexec 0 0',
-  match => '\*/dev/shm\*noexec',
-}
-
+notify{"NOT USED (1.1.3 - 1.1.5) /tmp is mounted + (1.1.8 - 1.1.10) /var/tmp is mounted":}
+notify{"NOT USED (1.1.6) /var is mounted":}
+notify{"NOT USED (1.1.7) /var/tmp is bound to /tmp":}
+notify{"NOT USED (1.1.11) /var/log is separate mount":}
+notify{"NOT USED (1.1.12) /var/log/audit is separate mount":}
+notify{"NOT USED (1.1.13 - 1.1.14) /home is separate mount":}
+notify{"NOT USED (1.1.15) /dev/shm - nodev":}
+notify{"NOT USED (1.1.16) /dev/shm - nosuid":}
+notify{"NOT USED (1.1.17) /dev/shm - noexec":}
 notify {"NOT USED 1.1.18 Ensure nodev option set on removable media partitions":}
 notify {"NOT USED 1.1.19 Ensure nosuid option set on removable media partitions":}
 notify {"NOT USED 1.1.20 Ensure noexec option set on removable media partitions":}

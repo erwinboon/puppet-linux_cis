@@ -21,9 +21,9 @@ class cis_rhel7::rule::rule_6_2{
 #NOT USED 6.2.19 Ensure no duplicate group names exist
 
 notify{"NOT USED 6.2.1 Ensure password fields are not empty":}
-notify{"NOT USED  6.2.2 Ensure no legacy "+" entries exist in /etc/passwd":}
-notify{"NOT USED 6.2.3 Ensure no legacy "+" entries exist in /etc/shadow":}
-notify{"NOT USED 6.2.4 Ensure no legacy "+" entries exist in /etc/group":}
+notify{"NOT USED  6.2.2 Ensure no legacy \"+\" entries exist in /etc/passwd":}
+notify{"NOT USED 6.2.3 Ensure no legacy \"+\" entries exist in /etc/shadow":}
+notify{"NOT USED 6.2.4 Ensure no legacy \"+\" entries exist in /etc/group":}
 notify{"NOT USED 6.2.5 Ensure root is the only UID 0 account":}
 notify{"NOT USED 6.2.6 Ensure root PATH Integrity":}
 notify{"NOT USED 6.2.7 Ensure all users' home directories exist":}
