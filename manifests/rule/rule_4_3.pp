@@ -10,7 +10,7 @@ class cis_rhel7::rule::rule_4_3 (
 
 $file = '/etc/logrotate.d/syslog'
 
-file { "(5.3) - ${file} exists":
+file { "(4.3) - ${file} exists":
   name    => $file,
   ensure  => file,
   mode    => '0644',
@@ -22,7 +22,7 @@ file { "(5.3) - ${file} exists":
 
 each ($logs) |$log| {
  
-  file_line { "(5.3) - ${file}: ${log}":
+  file_line { "(4.3) - ${file}: ${log}":
     ensure    => present,
     path      => $file,
     line      => $log,

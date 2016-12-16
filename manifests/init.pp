@@ -6,7 +6,7 @@ class cis_rhel7 inherits ::cis_rhel7::params {
   
   ## Rules
   
-  include ::cis_rhel7::rule::prereq
+  #include ::cis_rhel7::rule::prereq
   #1.1 filesystem
   include ::cis_rhel7::rule::rule_1_1  
   include ::cis_rhel7::rule::rule_1_2  
@@ -28,5 +28,15 @@ class cis_rhel7 inherits ::cis_rhel7::params {
   include ::cis_rhel7::rule::rule_3_7
   include ::cis_rhel7::rule::rule_4_1
   include ::cis_rhel7::rule::rule_4_2
+  include ::cis_rhel7::rule::rule_4_3
+  include ::cis_rhel7::rule::rule_5_1
+  include ::cis_rhel7::rule::rule_5_2
+  include ::cis_rhel7::rule::rule_5_3
+  include ::cis_rhel7::rule::rule_5_4
+  include ::cis_rhel7::rule::rule_5_5
+  include ::cis_rhel7::rule::rule_5_6
+  include ::cis_rhel7::rule::rule_6_1
+  include ::cis_rhel7::rule::rule_6_2
+
   
 } #EOF
