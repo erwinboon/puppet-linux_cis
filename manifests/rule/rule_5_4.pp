@@ -43,7 +43,14 @@ file_line { "(5.4.1.3) - Set password expiring warning days":
   match     => '^PASS_WARN_AGE.*7',
   replace       => false,
 }
-notify{"NOT USED 5.4.1.4 Ensure inactive password lock is 30 days or less":}
+
+file_line { "(5.4.1.4) - Ensure inactive password lock is 30 days or less":
+  ensure    => present,
+  path      => '/etc/default/useradd',
+  line      => 'INACTIVE=30',
+  match     => '^INACTIVE',
+}
+
 notify{"NOT USED 5.4.2 Ensure system accounts are non-login":}
 notify{"NOT USED 5.4.3 Ensure default group for the root account is GID 0":}
 notify{"NOT USED 5.4.4 Ensure default user umask is 027 or more restrictive":}
