@@ -1,33 +1,31 @@
 class cis_rhel7::rule::rule_3_1 {
 
 # includes Rules:
-# 3.1 - Set Daemon umask (Scored)
+#3.1.1 Ensure IP forwarding is disabled
+#3.1.2 Ensure packet redirect sending is disabled 
 
-$file = '/etc/sysconfig/init'
+$file = '/etc/sysctl.conf'
 
-if $::operatingsystem == 'RedHat'
-{
-
-  file { "(3.1) - ${file} exists":
-    path    => $file,
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-  }
-
-  file_line { "(3.1) - ${file} umask 027":
-    ensure  => present,
-    path    => $file,
-    line    => 'umask 027',
-    match   => '^umask 027',
-  }
-
-} 
-else 
-{
-  notify { "(3.1) - This operating system is not RedHat, skipping..": }
+file_line { "(3.1.1) - ${file}: ip_forward=0":
+  ensure  => present,
+  path  => $file,
+  line  => 'net.ipv4.ip_forward=0',
+  match => '^net.ipv4.ip_forward',
 }
 
+
+file_line { "(3.1.2) - ${file}: all.send_redirects=0":
+  ensure  => present,
+  path    => $file,
+  line    => 'net.ipv4.conf.all.send_redirects=0',
+  match   => '^net.ipv4.conf.all.send_redirects',
+}
+
+file_line { "(3.1.2) - ${file}: default.send_redirects=0":
+  ensure  => present,
+  path    => $file,
+  line    => 'net.ipv4.conf.default.send_redirects=0',
+  match   => '^net.ipv4.conf.default.send_redirects',
+}
 
 } #EOF
