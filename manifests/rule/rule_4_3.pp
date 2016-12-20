@@ -26,7 +26,7 @@ each ($logs) |$log| {
     ensure    => present,
     path      => $file,
     line      => $log,
-    match	  => "^${rule}",
+    match	    => "^${log}",
     multiple  => false,
   }
 }

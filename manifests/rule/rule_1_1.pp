@@ -103,25 +103,25 @@ file { '(1.1.2) "/tmp" properties':
   group  => 'root',
 }
 
-notify{"NOT USED (1.1.3 - 1.1.5) /tmp is mounted + (1.1.8 - 1.1.10) /var/tmp is mounted":}
-notify{"NOT USED (1.1.6) /var is mounted":}
-notify{"NOT USED (1.1.7) /var/tmp is bound to /tmp":}
-notify{"NOT USED (1.1.11) /var/log is separate mount":}
-notify{"NOT USED (1.1.12) /var/log/audit is separate mount":}
-notify{"NOT USED (1.1.13 - 1.1.14) /home is separate mount":}
-notify{"NOT USED (1.1.15) /dev/shm - nodev":}
-notify{"NOT USED (1.1.16) /dev/shm - nosuid":}
-notify{"NOT USED (1.1.17) /dev/shm - noexec":}
-notify {"NOT USED 1.1.18 Ensure nodev option set on removable media partitions":}
-notify {"NOT USED 1.1.19 Ensure nosuid option set on removable media partitions":}
-notify {"NOT USED 1.1.20 Ensure noexec option set on removable media partitions":}
+notify{"NOT USED (1.1.3 - 1.1.5) /tmp is mounted + (1.1.8 - 1.1.10) /var/tmp is mounted": loglevel => "debug"}
+notify{"NOT USED (1.1.6) /var is mounted": loglevel => "debug"}
+notify{"NOT USED (1.1.7) /var/tmp is bound to /tmp": loglevel => "debug"}
+notify{"NOT USED (1.1.11) /var/log is separate mount": loglevel => "debug"}
+notify{"NOT USED (1.1.12) /var/log/audit is separate mount": loglevel => "debug"}
+notify{"NOT USED (1.1.13 - 1.1.14) /home is separate mount": loglevel => "debug"}
+notify{"NOT USED (1.1.15) /dev/shm - nodev": loglevel => "debug"}
+notify{"NOT USED (1.1.16) /dev/shm - nosuid": loglevel => "debug"}
+notify{"NOT USED (1.1.17) /dev/shm - noexec": loglevel => "debug"}
+notify {"NOT USED 1.1.18 Ensure nodev option set on removable media partitions": loglevel => "debug"}
+notify {"NOT USED 1.1.19 Ensure nosuid option set on removable media partitions": loglevel => "debug"}
+notify {"NOT USED 1.1.20 Ensure noexec option set on removable media partitions": loglevel => "debug"}
 
 # 1.1.21 - Set Sticky Bit on All World-Writable Directories
 
 $ww_dirs = $::cis_benchmarks['ww_dirs']
 
 if ($ww_dirs != "") {
-    notify { "(1.1.21) sticky bit not set on: ${ww_dirs}": }
+    notify { "(1.1.21) sticky bit not set on: ${ww_dirs}": loglevel => "debug"}
 }
 
 #1.1.22 disable automounting

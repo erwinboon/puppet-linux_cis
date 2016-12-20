@@ -11,7 +11,7 @@ package { "(1.3.1) - OSSEC CLIENT [AIDE] is installed and running":
 
 # includes Rules:
 # 1.3.2 - Ensure filesystem integrity is regularly checked 
-notify {"NOT USED 1.3.2 Ensure filesystem integrity is regularly checked":}
+notify {"NOT USED 1.3.2 Ensure filesystem integrity is regularly checked": loglevel => "debug"}
 
 
 } #EOF

@@ -10,6 +10,6 @@ class cis_rhel7::rule::rule_1_6 {
 #1.6.2 Ensure SELinux is installed
 
 #NOT USED; enforced from the base profile.
-notify {"NOT USED 1.6.1 Configure SELinux":}
-notify {"NOT USED 1.6.2 Ensure SELinux is installed":}
+notify {"NOT USED 1.6.1 Configure SELinux": loglevel => "debug"}
+notify {"NOT USED 1.6.2 Ensure SELinux is installed": loglevel => "debug"}
 }
