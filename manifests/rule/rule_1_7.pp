@@ -47,6 +47,6 @@ file {"${issuenet}" :
   group => 'root',
 }
 
-notify {"NOT USED #1.7.2 Ensure GDM login banner is configured":}
+notify {"NOT USED #1.7.2 Ensure GDM login banner is configured": loglevel =>  "debug"}
 } #EOF
 
