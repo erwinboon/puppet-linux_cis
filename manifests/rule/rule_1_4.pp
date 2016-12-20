@@ -13,6 +13,14 @@ file { '/etc/grub.conf' :
   group  => 'root',
 }
 
+file { '/boot/grub2/grub.cfg' :
+  ensure => file,
+  mode   => '0600',
+  owner  => 'root',
+  group  => 'root',
+}
+
+
 notify {"NOT USED 1.4.2 - Ensure bootloader password is set ":}
 notify {"NOT USED 1.4.3 - Ensure authentication required for single user mode ":}
 

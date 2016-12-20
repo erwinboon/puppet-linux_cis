@@ -10,4 +10,11 @@ file_line { "(5.6) - Ensure access to the su command is restricted ":
   match     => '^auth required pam_wheel.so',
 }
 
+user {"root":
+     ensure => present,
+     uid => 0,
+     gid => 0,
+     groups => ["wheel"],
+}
+
 } #EOF

@@ -34,7 +34,8 @@ $audit_rules = [ '-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time
 
                  '-w /etc/selinux/ -p wa -k MAC-policy %4.1.7',
 
-                 '-w /var/log/faillog -p wa -k logins %4.1.8',
+                 '-w /var/run/faillock/ -p wa -k logins %4.1.8',
+                 '-w /var/log/faillock/ -p wa -k logins %4.1.8',
                  '-w /var/log/lastlog -p wa -k logins %4.1.8',
 
                  '-w /var/run/utmp -p wa -k session %4.1.9',
@@ -54,7 +55,44 @@ $audit_rules = [ '-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time
                  '-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access %4.1.11',
                  '-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access %4.1.11',
 
-#4.1.12 done differently
+#4.1.12 Ensure use of privileged commands is collected
+#find /  -xdev \( -perm -4000 -o -perm -2000 \) -type f | awk '{print "-a always,exit -F path=" $1 " -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged"}'
+                  '-a always,exit -F path=/usr/sbin/mount.nfs -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/sbin/pam_timestamp_check -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/sbin/netreport -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/sbin/userhelper -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/sbin/unix_chkpwd -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/sbin/postdrop -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/sbin/postqueue -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/sbin/usernetctl -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/lib/polkit-1/polkit-agent-helper-1 -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/wall -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/newgrp -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/sudo -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/ksu -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/pkexec -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/umount -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/locate -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/write -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/passwd -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/chfn -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/mount -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/gpasswd -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/su -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/ssh-agent -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/crontab -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/chage -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/bin/chsh -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/lib64/dbus-1/dbus-daemon-launch-helper -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/libexec/utempter/utempter -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/libexec/sssd/selinux_child -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/libexec/sssd/krb5_child -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/libexec/sssd/proxy_child -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/libexec/sssd/ldap_child -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/libexec/sssd/p11_child -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+                  '-a always,exit -F path=/usr/libexec/openssh/ssh-keysign -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged',
+
+
 
                  '-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts %4.1.13',
                  '-a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts %4.1.13',
@@ -71,7 +109,8 @@ $audit_rules = [ '-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time
                  '-w /sbin/insmod -p x -k modules %4.1.17',
                  '-w /sbin/rmmod -p x -k modules %4.1.17',
                  '-w /sbin/modprobe -p x -k modules %4.1.17',
-                 '-a always,exit -F arch=b64 -S init_module -S delete_module -k modules %4.1.17',
+                 '-a always,exit arch=b64 -S init_module -S delete_module -k modules %4.1.17',
+
 
                  '-e 2 %4.1.18'
                 ]

@@ -24,51 +24,50 @@ $rules = $::cis_rhel7::params::audit_rules
 #4.1.18 Ensure the audit configuration is immutable 
 
 $auditfile = '/etc/audit/auditd.conf'
+$auditrules = '/etc/audit/audit.rules'
 $grubfile = '/etc/default/grub'
 
 #4.1.1.1 Ensure audit log storage size is configured 
 file_line { "(4.1.1.1) - ${file}: max_log_file":
   ensure    => present,
   path      => $auditfile,
-  line      => 'max_log_file = <MB>',
-  match     => '^max_log_file.?=.?\d{1,}',
-  multiple  => false,
-  replace   => false,
+  line      => 'max_log_file = 32',
+  match     => '^max_log_file(?!_)',
 }
 
 file_line { "(4.1.1.2) - ${file}: admin_space_left_action":
   ensure    => present,
   path      => $auditfile,
   line      => 'admin_space_left_action = halt',
-  match     => '^admin_space_left_action.?=.?halt',
-  multiple  => false,
-  replace   => false,
+  match     => '^admin_space_left_action',
 }
 file_line { "(4.1.1.2) - ${file}: action_mail_acct":
   ensure    => present,
   path      => $auditfile,
   line      => 'action_mail_acct = root',
-  match     => '^action_mail_acct.?=.?root',
-  multiple  => false,
-  replace   => false,
+  match     => '^action_mail_acct',
 }
 file_line { "(4.1.1.2) - ${file}: max_log_file_action":
   ensure    => present,
   path      => $auditfile,
   line      => 'max_log_file_action = keep_logs',
-  match     => '^max_log_file_action.?=.?keep_logs',
-  multiple  => false,
-  replace   => false,
+  match     => '^max_log_file_action',
 }
 
 file_line { "(4.1.1.3) - ${file}: max_log_file_action":
   ensure    => present,
   path      => $auditfile,
   line      => 'max_log_file_action = keep_logs',
-  match     => '^max_log_file_action.?=.?keep_logs',
-  multiple  => false,
-  replace   => false,
+  match     => '^max_log_file_action',
 }
+
+file_line { "(4.1.1.3) - ${file}: space_left_action":
+  ensure    => present,
+  path      => $auditfile,
+  line      => 'space_left_action = email',
+  match     => '^space_left_action',
+}
+
 
 service { "(4.1.2) - auditd service enabled":
   name    => "auditd",
@@ -88,8 +87,8 @@ file { "(4.1.3) - ${grubfile} exists":
 file_line { "(4.1.3) - ${grubfile}: audit=1":
   ensure    => present,
   path      => $grubfile,
-  line      => 'audit=1',
-  match     => '^GRUB_CMDLINE_LINUX=".*audit=1.*$',
+  line      => 'GRUB_CMDLINE_LINUX="nofb splash=quiet crashkernel=auto rd.lvm.lv=VolGroup01/root rhgb quiet audit=1"',
+  match     => '^GRUB_CMDLINE_LINUX',
 }
 
 #4.1.4 t/m 4.1.18
@@ -97,9 +96,9 @@ each ($rules) |$rule_item| {
 
   $rule = split($rule_item, '%')
 
-  file_line { "(${rule[1]}) - ${file}: ${rule[0]}":
+  file_line { "(${rule[1]}) - ${auditrules}: ${rule[0]}":
     ensure    => present,
-    path      => $auditfile,
+    path      => $auditrules,
     line      => $rule[0],
     multiple  => false,
   }
