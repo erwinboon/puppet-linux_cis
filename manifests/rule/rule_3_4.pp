@@ -1,4 +1,5 @@
-class cis_rhel7::rule::rule_3_4 {
+class cis_rhel7::rule::rule_3_4(
+$iprange = $cis_rhel7::params::iprange) {
 
 # includes Rules:
 # 3.4.1 - Install TCP Wrappers (Not Scored)
@@ -9,7 +10,7 @@ class cis_rhel7::rule::rule_3_4 {
 
 $file = '/etc/hosts.allow'
 $filedeny = '/etc/hosts.deny'
-$iprange = '10.4.6.0/24,192.168.40.0/24'
+#$iprange = '10.4.6.0/24,192.168.40.0/24'
 
 package { "(3.4.1) - Install TCP Wrappers":
   name    => "tcp_wrappers",
