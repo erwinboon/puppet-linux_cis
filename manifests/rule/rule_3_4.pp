@@ -10,7 +10,6 @@ $iprange = $cis_rhel7::params::iprange) {
 
 $file = '/etc/hosts.allow'
 $filedeny = '/etc/hosts.deny'
-#$iprange = '10.4.6.0/24,192.168.40.0/24'
 
 package { "(3.4.1) - Install TCP Wrappers":
   name    => "tcp_wrappers",
@@ -21,9 +20,10 @@ file_line { "(3.4.2) - ${file}: ADD: net/mask":
   ensure    => present,
   path      => $file,
   line      => "ALL: ${iprange}",
-  match     => '^ALL.?:.?\d{2,}.\d{2,}.\d{1,}.\d{1,}\/\d{2,}.\d{2,}.\d{1,}.\d{1,}',
+  match     => '^ALL:.*',
+  match_for_absence => true,
   multiple  => true,
-  replace   => false,
+  replace   => true,
 }
 
 file { "(3.4.4) - ${file} has 644 permissions":
