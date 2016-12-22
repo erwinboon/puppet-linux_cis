@@ -1,4 +1,8 @@
-class cis_rhel7::params {
+class cis_rhel7::params (
+#enable/disable specific rules
+$rule_3_1 = true,
+$rule_3_2 = true,
+) {
   
 # Resource Defaults to NOOP 
 File      { noop => false}
@@ -11,6 +15,7 @@ Package   { noop => false }
 Cron      { noop => false }
 Augeas    { noop => false }
 Pam       { noop => false }
+
 
 # Rule 4.1.4
 $audit_rules = [ '-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change %4.1.4',
