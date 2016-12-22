@@ -2,6 +2,7 @@ class cis_rhel7::params (
 #enable/disable specific rules
 $rule_3_1 = true,
 $rule_3_2 = true,
+$iprange  = undef,
 ) {
   
 # Resource Defaults to NOOP 
@@ -16,6 +17,9 @@ Cron      { noop => false }
 Augeas    { noop => false }
 Pam       { noop => false }
 
+if ($iprange == undef) {
+    fail ("\n\n!! The IP network range needs to be defined for /etc/hosts.allow. Variable is named cis_rhel7::params::iprange !! \n\n")
+}
 
 # Rule 4.1.4
 $audit_rules = [ '-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change %4.1.4',
