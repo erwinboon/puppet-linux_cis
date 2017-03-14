@@ -71,19 +71,19 @@ file_line {"(5.3.2) Ensure lockout for failed password attempts is configured pa
   match => '^auth.*required.*pam_faillock.so',
 }
 
-file_line {"(5.3.2) Ensure lockout for failed password attempts is configured pam_default password-auth":
-  ensure => present,
-  path => "/etc/pam.d/password-auth",
-  line => 'auth [success=1 default=bad] pam_unix.so',
-  match => '^auth.*[success=1 default=bad].*pam_unix.so',
-}
+#file_line {"(5.3.2) Ensure lockout for failed password attempts is configured pam_default password-auth":
+#  ensure => present,
+#  path => "/etc/pam.d/password-auth",
+#  line => 'auth [success=1 default=bad] pam_unix.so',
+#  match => '^auth.*[success=1 default=bad].*pam_unix.so',
+#}
 
-file_line {"(5.3.2) Ensure lockout for failed password attempts is configured pam_default system-auth":
-  ensure => present,
-  path => "/etc/pam.d/system-auth",
-  line => 'auth [success=1 default=bad] pam_unix.so',
-  match => '^auth.*[success=1 default=bad].*pam_unix.so',
-}
+#file_line {"(5.3.2) Ensure lockout for failed password attempts is configured pam_default system-auth":
+#  ensure => present,
+#  path => "/etc/pam.d/system-auth",
+#  line => 'auth [success=1 default=bad] pam_unix.so',
+#  match => '^auth.*[success=1 default=bad].*pam_unix.so',
+#}
 
 file_line {"(5.3.2) Ensure lockout for failed password attempts is configured pam_faillock_die password-auth":
   ensure => present,
