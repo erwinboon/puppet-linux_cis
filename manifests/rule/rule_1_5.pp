@@ -39,7 +39,7 @@ file_line { "(1.5.1) - ${file_sysctl}: disable core dumps":
 }
 
 #1.5.2
-notify {"#NOT USED 1.5.2 Ensure XD/NX support is enabled": loglevel => "debug"}
+#notify {"#NOT USED 1.5.2 Ensure XD/NX support is enabled": loglevel => "debug"}
 
 #1.5.3
 file_line { "(1.5.3) - ${file_sysctl}: enable address space layout randomization (ASLR)":

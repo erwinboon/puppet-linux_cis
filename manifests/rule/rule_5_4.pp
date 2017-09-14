@@ -51,8 +51,8 @@ file_line { "(5.4.1.4) - Ensure inactive password lock is 30 days or less":
   match     => '^INACTIVE',
 }
 
-notify{"NOT USED 5.4.2 Ensure system accounts are non-login":loglevel => "debug"}
-notify{"NOT USED 5.4.3 Ensure default group for the root account is GID 0":loglevel => "debug"}
-notify{"NOT USED 5.4.4 Ensure default user umask is 027 or more restrictive":loglevel => "debug"}
+#notify{"NOT USED 5.4.2 Ensure system accounts are non-login":loglevel => "debug"}
+#notify{"NOT USED 5.4.3 Ensure default group for the root account is GID 0":loglevel => "debug"}
+#notify{"NOT USED 5.4.4 Ensure default user umask is 027 or more restrictive":loglevel => "debug"}
 } #EOF
 

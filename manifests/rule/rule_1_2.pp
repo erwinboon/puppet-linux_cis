@@ -49,7 +49,7 @@ if $::operatingsystem == 'RedHat'
   
   #1.2.4
   #if exists /etc/sysconfig/rhn/systemid and not empty
-  notify {"NOT CHECKED Ensure Red Hat Network or Subscription Manager connection is configured": loglevel => "debug" }
+#  notify {"NOT CHECKED Ensure Red Hat Network or Subscription Manager connection is configured": loglevel => "debug" }
   
   #1.2.5
   service { "(1.2.4) rhnsd service is disabled":
@@ -61,10 +61,10 @@ if $::operatingsystem == 'RedHat'
 } elsif $::operatingsystem == 'CentOS' 
 { 
 #1.2.1
-  notify {"NOT CHECKED 1.2.1 Ensure package manager repositories are configured ": loglevel => "debug" }
+#  notify {"NOT CHECKED 1.2.1 Ensure package manager repositories are configured ": loglevel => "debug" }
   
 #1.2.2
-  notify {"NOT CHECKED 1.2.2 Ensure GPG keys are configured": loglevel => "debug" }
+#  notify {"NOT CHECKED 1.2.2 Ensure GPG keys are configured": loglevel => "debug" }
   
 #1.2.3
   file_line { "(1.2.3) /etc/yum.conf contains gpgcheck=1":
