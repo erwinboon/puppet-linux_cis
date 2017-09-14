@@ -35,8 +35,8 @@ if $::operatingsystemmajrelease == '7' {
 
 
 
-notify {"NOT USED 1.4.2 - Ensure bootloader password is set ": loglevel => "debug"}
-notify {"NOT USED 1.4.3 - Ensure authentication required for single user mode ": loglevel => "debug"}
+#notify {"NOT USED 1.4.2 - Ensure bootloader password is set ": loglevel => "debug"}
+#notify {"NOT USED 1.4.3 - Ensure authentication required for single user mode ": loglevel => "debug"}
 
 } #EOF
 

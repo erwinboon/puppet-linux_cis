@@ -116,8 +116,8 @@ file_line {"(5.3.2) Ensure lockout for failed password attempts is configured fa
 
 
 
-notify{"NOT USED 5.3.3 Ensure password reuse is limited": loglevel => "debug" }
-notify{"NOT USED 5.3.4 Ensure password hashing algorithm is SHA-512": loglevel => "debug" }
+#notify{"NOT USED 5.3.3 Ensure password reuse is limited": loglevel => "debug" }
+#notify{"NOT USED 5.3.4 Ensure password hashing algorithm is SHA-512": loglevel => "debug" }
 
 file_line {"(5.3.4) Ensure password hashing algorithm is SHA-512 - password-auth":
   ensure => present,
