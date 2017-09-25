@@ -28,40 +28,40 @@ $auditrules = '/etc/audit/audit.rules'
 $grubfile = '/etc/default/grub'
 
 #4.1.1.1 Ensure audit log storage size is configured 
-file_line { "(4.1.1.1) - ${file}: max_log_file":
+file_line { "(4.1.1.1) - ${auditfile}: max_log_file":
   ensure    => present,
   path      => $auditfile,
   line      => 'max_log_file = 32',
   match     => '^max_log_file(?!_)',
 }
 
-file_line { "(4.1.1.2) - ${file}: admin_space_left_action":
+file_line { "(4.1.1.2) - ${auditfile}: admin_space_left_action":
   ensure    => present,
   path      => $auditfile,
   line      => 'admin_space_left_action = halt',
   match     => '^admin_space_left_action',
 }
-file_line { "(4.1.1.2) - ${file}: action_mail_acct":
+file_line { "(4.1.1.2) - ${auditfile}: action_mail_acct":
   ensure    => present,
   path      => $auditfile,
   line      => 'action_mail_acct = root',
   match     => '^action_mail_acct',
 }
-file_line { "(4.1.1.2) - ${file}: max_log_file_action":
+file_line { "(4.1.1.2) - ${auditfile}: max_log_file_action":
   ensure    => present,
   path      => $auditfile,
   line      => 'max_log_file_action = keep_logs',
   match     => '^max_log_file_action',
 }
 
-file_line { "(4.1.1.3) - ${file}: max_log_file_action":
+file_line { "(4.1.1.3) - ${auditfile}: max_log_file_action":
   ensure    => present,
   path      => $auditfile,
   line      => 'max_log_file_action = keep_logs',
   match     => '^max_log_file_action',
 }
 
-file_line { "(4.1.1.3) - ${file}: space_left_action":
+file_line { "(4.1.1.3) - ${auditfile}: space_left_action":
   ensure    => present,
   path      => $auditfile,
   line      => 'space_left_action = email',
