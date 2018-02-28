@@ -22,7 +22,10 @@
 #4.1.18 Ensure the audit configuration is immutable 
 
 class cis_rhel7::rule::rule_4_1(
-  $rules = $::cis_rhel7::params::audit_rules
+  $rules = $::cis_rhel7::params::audit_rules,
+  $max_log_file = '32',
+  $num_logs = '5',
+  $max_log_file_action = 'keep_logs', # or rotate
 ) {
   $auditfile = '/etc/audit/auditd.conf'
   $auditrules = '/etc/audit/audit.rules'
@@ -32,7 +35,7 @@ class cis_rhel7::rule::rule_4_1(
   file_line { "(4.1.1.1) - ${auditfile}: max_log_file":
     ensure => present,
     path   => $auditfile,
-    line   => 'max_log_file = 32',
+    line   => "max_log_file = ${max_log_file}",
     match  => '^max_log_file(?!_)',
   }
   file_line { "(4.1.1.2) - ${auditfile}: admin_space_left_action":
@@ -47,16 +50,16 @@ class cis_rhel7::rule::rule_4_1(
     line   => 'action_mail_acct = root',
     match  => '^action_mail_acct',
   }
+  file_line { "(4.1.1.2) - ${auditfile}: num_logs":
+    ensure => present,
+    path   => $auditfile,
+    line   => "num_logs = ${num_logs}",
+    match  => '^num_logs',
+  }
   file_line { "(4.1.1.2) - ${auditfile}: max_log_file_action":
     ensure => present,
     path   => $auditfile,
-    line   => 'max_log_file_action = keep_logs',
-    match  => '^max_log_file_action',
-  }
-  file_line { "(4.1.1.3) - ${auditfile}: max_log_file_action":
-    ensure => present,
-    path   => $auditfile,
-    line   => 'max_log_file_action = keep_logs',
+    line   => "max_log_file_action = ${max_log_file_action}",
     match  => '^max_log_file_action',
   }
   file_line { "(4.1.1.3) - ${auditfile}: space_left_action":
