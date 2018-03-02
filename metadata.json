@@ -1,6 +1,6 @@
  {
       "name": "ConclusionMC-linux_cis",
-      "version": "1.0.8",
+      "version": "1.1.0",
       "author": "ConclusionMC",
       "license": "Apache-2.0",
       "summary": "CIS Benchmark Compliance for RHEL 7",
