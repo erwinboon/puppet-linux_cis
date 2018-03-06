@@ -1,7 +1,7 @@
  {
-      "name": "ConclusionMC-linux_cis",
+      "name": "cmc-linux_cis",
       "version": "1.1.1",
-      "author": "ConclusionMC",
+      "author": "Conclusion Mission Critical",
       "license": "Apache-2.0",
       "summary": "CIS Benchmark Compliance for RHEL 7",
       "source": "git@github.com:ConclusionMC/puppet-linux_cis.git",
