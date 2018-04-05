@@ -1,6 +1,6 @@
  {
       "name": "cmc-linux_cis",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "author": "Conclusion Mission Critical",
       "license": "Apache-2.0",
       "summary": "CIS Benchmark Compliance for RHEL 7",
