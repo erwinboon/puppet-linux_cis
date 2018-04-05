@@ -33,12 +33,6 @@
 class cis_rhel7::rule::rule_1_1 {
   $file = '/etc/modprobe.d/CIS.conf'
 
-  file { '/etc/modprobe.d':
-    ensure => directory,
-    mode   => '0755',
-    owner  => 'root',
-    group  => 'root',
-  }
   file { $file :
     ensure => file,
     mode   => '0600',
