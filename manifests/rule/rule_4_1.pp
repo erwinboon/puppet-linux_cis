@@ -81,11 +81,9 @@ class cis_rhel7::rule::rule_4_1(
     owner  => 'root',
     group  => 'root',
   }
-  file_line { "(4.1.3) - ${grubfile}: audit=1":
+  kernel_parameter { 'audit':
     ensure => present,
-    path   => $grubfile,
-    line   => 'GRUB_CMDLINE_LINUX="nofb splash=quiet crashkernel=auto rd.lvm.lv=VolGroup01/root rhgb quiet audit=1"',
-    match  => '^GRUB_CMDLINE_LINUX',
+    value  => '1',
   }
   #4.1.4 t/m 4.1.18
   each ($rules) |$rule_item| {
