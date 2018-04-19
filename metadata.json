@@ -1,6 +1,6 @@
  {
       "name": "cmc-linux_cis",
-      "version": "1.1.2",
+      "version": "1.1.3",
       "author": "Conclusion Mission Critical",
       "license": "Apache-2.0",
       "summary": "CIS Benchmark Compliance for RHEL 7",
@@ -20,6 +20,7 @@
        ],
       "dependencies": [
         { "name": "puppetlabs/stdlib", "version_requirement": ">= 2.2.0 < 5.0.0" },
-        { "name": "herculesteam-augeasproviders_pam", "version_requirement": ">= 2.1.0 < 5.0.0" }
+        { "name": "herculesteam-augeasproviders_pam", "version_requirement": ">= 2.1.0 < 3.0.0" },
+        { "name": "herculesteam-augeasproviders_grub", "version_requirement": ">= 3.0.0 < 4.0.0" }
       ]
     }
