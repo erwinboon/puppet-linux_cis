@@ -40,11 +40,14 @@ class cis_rhel7::rule::rule_3_3 (
       match  => '^net.ipv6.conf.default.accept_redirects',
     }
   }
-  if $disable_ipv6 {
-    file_line { "(3.3.3) ${file_cis} - disable ipv6":
-      ensure => present,
-      path   => $file_cis,
-      line   => 'options ipv6 disable=1',
+  kmod::option { 'ipv6':
+    option => 'disable',
+    value  => '1',
+    file   => $file_cis,
+    ensure => $disable_ipv6 ? {
+      true    => present,
+      false   => absent,
+      default => present,
     }
   }
 }
