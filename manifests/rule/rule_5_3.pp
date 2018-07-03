@@ -1,119 +1,168 @@
-# == Class: cis_rhel7::rule::rule_5_3
-# includes Rules:
-#NOT USED 5.3.1 Ensure password creation requirements are configured
-#NOT USED 5.3.2 Ensure lockout for failed password attempts is configured
-#NOT USED 5.3.3 Ensure password reuse is limited
-#NOT USED 5.3.4 Ensure password hashing algorithm is SHA-512
-
-class cis_rhel7::rule::rule_5_3{
+# class to manage PAM settings
+#
+# @param max_login_retries Set the maximum allowed login tries
+# @param min_password_length Set the minimum password length for local users
+# @param password_digits_present Set the digits in password requirement
+# @param password_ucaser_present Set the uppercase character in password requirement
+# @param password_lcase_present Set the lowercase character in password requirement
+# @param password_other_present Set the other character in password requirement
+# @param lockout_time Set the lock-out time when login attempt has failed
+# @param password_history Set the password history for reusing passwords
+# @param password_algoritm Password algoritm to use when storing passwords
+#
+class cis_rhel7::rule::rule_5_3 (
+  Integer $max_login_retries       = 3,
+  Integer $min_password_length     = 14,
+  Integer $password_digits_present = -1, #dcredit
+  Integer $password_ucaser_present = -1, #ucredit
+  Integer $password_lcase_present  = -1, #lcredit
+  Integer $password_other_present  = -1, #ocredit
+  Integer $lockout_time            = 900,
+  Integer $password_history        = 5,
+  String $password_algoritm        = 'sha512',
+){
+  $services = [
+    'system-auth',
+    'password-auth'
+  ]
+  #5.3.1 - Ensure password creation requirements are configured (Scored)
   if $::operatingsystemmajrelease == '7' {
+    $services.each | $service | {
+      pam { "5.3.1 pam_pwquality ${service}":
+        ensure    => present,
+        service   => $service,
+        type      => 'password',
+        module    => 'pam_pwquality.so',
+        control   => 'requisite',
+        arguments => [
+          'try_first_pass',
+          "retry=${max_login_retries}"
+        ]
+      }
+    }
     file_line {'(5.3.1) Ensure password creation requirements are configured minlen':
       ensure => present,
       path   => '/etc/security/pwquality.conf',
-      line   => 'minlen = 14',
+      line   => "minlen = ${min_password_length}",
       match  => '^minlen',
     }
     file_line {'(5.3.1) Ensure password creation requirements are configured dcredit':
       ensure => present,
       path   => '/etc/security/pwquality.conf',
-      line   => 'dcredit = -1',
+      line   => "dcredit = ${password_digits_present}",
       match  => '^dcredit',
     }
     file_line {'(5.3.1) Ensure password creation requirements are configured ucredit':
       ensure => present,
       path   => '/etc/security/pwquality.conf',
-      line   => 'ucredit = -1',
+      line   => "ucredit = ${password_ucaser_present}",
       match  => '^ucredit',
-    }
-    file_line {'(5.3.1) Ensure password creation requirements are configured ocredit':
-      ensure => present,
-      path   => '/etc/security/pwquality.conf',
-      line   => 'ocredit = -1',
-      match  => '^ocredit',
     }
     file_line {'(5.3.1) Ensure password creation requirements are configured lcredit':
       ensure => present,
       path   => '/etc/security/pwquality.conf',
-      line   => 'lcredit = -1',
+      line   => "lcredit = ${password_lcase_present}",
       match  => '^lcredit',
     }
-  } elsif $::operatingsystemmajrelease == '6'{
-    file_line {'(5.3.1) Ensure password creation requirements are configured - system-auth':
+    file_line {'(5.3.1) Ensure password creation requirements are configured ocredit':
       ensure => present,
-      path   => '/etc/pam.d/system-auth',
-      line   => 'password requisite pam_cracklib.so try_first_pass retry=3 minlen=14 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1',
-      match  => '^password.*requisite.*pam_cracklib.so.*$',
+      path   => '/etc/security/pwquality.conf',
+      line   => "ocredit = ${password_other_present}",
+      match  => '^ocredit',
     }
-    file_line {'(5.3.1) Ensure password creation requirements are configured - password-auth':
-      ensure => present,
-      path   => '/etc/pam.d/password-auth',
-      line   => 'password requisite pam_cracklib.so try_first_pass retry=3 minlen=14 dcredit=-1 ucredit=-1 ocredit=-1 lcredit=-1',
-      match  => '^password.*requisite.*pam_cracklib.so.*$',
+  } elsif $::operatingsystemmajrelease == '6'{
+    $services.each | $service | {
+      pam { "5.3.1 pam_cracklib ${service}":
+        ensure    => present,
+        service   => $service,
+        type      => 'password',
+        module    => 'pam_cracklib.so',
+        control   => 'requisite',
+        arguments => [
+          'try_first_pass',
+          "retry=${max_login_retries}",
+          "minlen=${min_password_length}",
+          "dcredit=${password_digits_present}",
+          "ucredit=${password_ucaser_present}",
+          "lcredit=${password_lcase_present}",
+          "ocredit=${password_other_present}"
+        ]
+      }
     }
   } else {
     notify {'Hardening not supported for your OS release, skipping':}
   }
-  file_line {'(5.3.2) Ensure lockout for failed password attempts is configured pam_faillock password-auth':
-    ensure => present,
-    path   => '/etc/pam.d/password-auth',
-    line   => 'auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900',
-    match  => '^auth.*required.*pam_faillock.so',
+  #5.3.2 - Ensure lockout for failed password attempts is configured (Scored)
+  $services.each | $service | {
+    pam { "5.3.2 pam_unix ${service}":
+      ensure           => present,
+      service          => $service,
+      type             => 'auth',
+      module           => 'pam_unix.so',
+      control          => '[success=1 default=bad]',
+      control_is_param => true,
+      arguments        => [],
+    }
+    pam { "5.3.2 pam_faillock preauth ${service}":
+      ensure           => present,
+      service          => $service,
+      type             => 'auth',
+      module           => 'pam_faillock.so',
+      control          => 'required',
+      control_is_param => true,
+      arguments        => [
+        'preauth',
+        'audit',
+        'silent',
+        'deny=5',
+        "unlock_time=${lockout_time}"
+      ],
+      position         => 'before *[type="auth" and module="pam_unix.so"]',
+    }
+    pam { "5.3.2 pam_faillock authfail ${service}":
+      ensure           => present,
+      service          => $service,
+      type             => 'auth',
+      module           => 'pam_faillock.so',
+      control          => '[default=die]',
+      control_is_param => true,
+      arguments        => [
+        'authfail',
+        'audit',
+        'deny=5',
+        "unlock_time=${lockout_time}"
+      ],
+      position         => 'after *[type="auth" and module="pam_unix.so"]',
+    }
+    pam { "5.3.2 pam_faillock authsucc ${service}":
+      ensure           => present,
+      service          => $service,
+      type             => 'auth',
+      module           => 'pam_faillock.so',
+      control          => 'sufficient',
+      control_is_param => true,
+      arguments        => [
+        'authsucc',
+        'audit',
+        'deny=5',
+        "unlock_time=${lockout_time}"
+      ],
+      position         => 'after *[type="auth" and module="pam_faillock.so" and control="[default=die]"]',
+    }
   }
-  file_line {'(5.3.2) Ensure lockout for failed password attempts is configured pam_faillock system-auth':
-    ensure => present,
-    path   => '/etc/pam.d/system-auth',
-    line   => 'auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900',
-    match  => '^auth.*required.*pam_faillock.so',
-  }
-# file_line {"(5.3.2) Ensure lockout for failed password attempts is configured pam_default password-auth":
-#   ensure => present,
-#   path => "/etc/pam.d/password-auth",
-#   line => 'auth [success=1 default=bad] pam_unix.so',
-#   match => '^auth.*[success=1 default=bad].*pam_unix.so',
-# }
-
-# file_line {"(5.3.2) Ensure lockout for failed password attempts is configured pam_default system-auth":
-#   ensure => present,
-#   path => "/etc/pam.d/system-auth",
-#   line => 'auth [success=1 default=bad] pam_unix.so',
-#   match => '^auth.*[success=1 default=bad].*pam_unix.so',
-# }
-  file_line {'(5.3.2) Ensure lockout for failed password attempts is configured pam_faillock_die password-auth':
-    ensure => present,
-    path   => '/etc/pam.d/password-auth',
-    line   => 'auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900',
-    match  => '^auth.*[default=die].*pam_faillock.so',
-  }
-  file_line {'(5.3.2) Ensure lockout for failed password attempts is configured pam_faillock_die system-auth':
-    ensure => present,
-    path   => '/etc/pam.d/system-auth',
-    line   => 'auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900',
-    match  => '^auth.*[default=die].*pam_faillock.so',
-  }
-  file_line {'(5.3.2) Ensure lockout for failed password attempts is configured faillock authsucc password-auth':
-    ensure => present,
-    path   => '/etc/pam.d/password-auth',
-    line   => 'auth sufficient pam_faillock.so authsucc audit deny=5 unlock_time=900',
-    match  => '^auth.*sufficient.*pam_faillock.so.*authsucc',
-  }
-  file_line {'(5.3.2) Ensure lockout for failed password attempts is configured faillock authsucc system-auth':
-    ensure => present,
-    path   => '/etc/pam.d/system-auth',
-    line   => 'auth sufficient pam_faillock.so authsucc audit deny=5 unlock_time=900',
-    match  => '^auth.*sufficient.*pam_faillock.so authsucc',
-  }
-#  notify{"NOT USED 5.3.3 Ensure password reuse is limited": loglevel => "debug" }
-#  notify{"NOT USED 5.3.4 Ensure password hashing algorithm is SHA-512": loglevel => "debug" }
-  file_line {'(5.3.4) Ensure password hashing algorithm is SHA-512 - password-auth':
-    ensure => present,
-    path   => '/etc/pam.d/password-auth',
-    line   => 'password    sufficient    pam_unix.so sha512 shadow nullok try_first_pass use_authtok remember=5',
-    match  => '^password.*sufficient.*pam_unix.so',
-  }
-  file_line {'(5.3.4) Ensure password hashing algorithm is SHA-512 - system-auth':
-    ensure => present,
-    path   => '/etc/pam.d/system-auth',
-    line   => 'password    sufficient    pam_unix.so sha512 shadow nullok try_first_pass use_authtok remember=5',
-    match  => '^password.*sufficient.*pam_unix.so',
+  #5.3.3 - Ensure password reuse is limited (Scored)
+  #5.3.4 - Ensure password hashing algorithm is SHA-512 (Scored)
+  $services.each | $service | {
+    pam { "5.3.3 and 5.3.4 pam_unix password ${password_algoritm} remember=${password_history} ${service}":
+      ensure    => present,
+      service   => $service,
+      type      => 'password',
+      module    => 'pam_unix.so',
+      control   => 'sufficient',
+      arguments => [
+        $password_algoritm,
+        "remember=${password_history}"
+      ],
+    }
   }
 }
