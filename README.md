@@ -34,7 +34,9 @@ This module requires 3 additional modules
 
 2. herculesteam-augeasproviders_pam
 
-3. camptocamp-kmod
+3. herculesteam-augeasproviders_grub
+
+4. camptocamp-kmod
 
 
 ## Usage
