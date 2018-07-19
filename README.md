@@ -28,7 +28,7 @@ If you'd like this module to enforce the actual rules on your nodes, open up the
 
 ### Setup Requirements
 
-This module requires 3 additional modules
+This module requires 4 additional modules
 
 1. puppetlabs-stdlib
 
