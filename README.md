@@ -28,11 +28,15 @@ If you'd like this module to enforce the actual rules on your nodes, open up the
 
 ### Setup Requirements
 
-This module requires 2 additional modules
+This module requires 4 additional modules
 
 1. puppetlabs-stdlib
 
 2. herculesteam-augeasproviders_pam
+
+3. herculesteam-augeasproviders_grub
+
+4. camptocamp-kmod
 
 
 ## Usage
