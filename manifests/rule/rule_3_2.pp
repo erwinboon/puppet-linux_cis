@@ -13,85 +13,66 @@ class cis_rhel7::rule::rule_3_2(
   $enabled = $cis_rhel7::params::rule_3_2,
 ) {
 if $enabled {
-    $file = '/etc/sysctl.conf'
 
-    file_line { "(3.2.1) - ${file}: all.accept_source_route=0":
+    #3.2.1
+    sysctl { 'net.ipv4.conf.all.accept_source_route':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.all.accept_source_route=0',
-      match  => '^net.ipv4.conf.all.accept_source_route',
+      value  => '0',
     }
-    file_line { "(3.2.1) - ${file}: default.accept_source_route=0":
+    sysctl { 'net.ipv4.conf.default.accept_source_route':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.default.accept_source_route=0',
-      match  => '^net.ipv4.conf.default.accept_source_route',
+      value  => '0',
     }
-    file_line { "(3.2.2) - ${file}: all.accept_redirects=0":
+    #3.2.2
+    sysctl { 'net.ipv4.conf.all.accept_redirects':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.all.accept_redirects=0',
-      match  => '^net.ipv4.conf.all.accept_redirects=0',
+      value  => '0',
     }
-    file_line { "(3.2.2) - ${file}: default.accept_redirects=0":
+    sysctl { 'net.ipv4.conf.default.accept_redirects':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.default.accept_redirects=0',
-      match  => '^net.ipv4.conf.default.accept_redirects=0',
+      value  => '0',
     }
-    file_line { "(3.2.3) - ${file}: all.secure_redirects=0":
+    #3.2.3
+    sysctl { 'net.ipv4.conf.all.secure_redirects':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.all.secure_redirects=0',
-      match  => '^net.ipv4.conf.all.secure_redirects=0',
+      value  => '0',
     }
-    file_line { "(3.2.3) - ${file}: default.secure_redirects=0":
+    sysctl { 'net.ipv4.conf.default.secure_redirects':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.default.secure_redirects=0',
-      match  => '^net.ipv4.conf.default.secure_redirects=0',
+      value  => '0',
     }
-    file_line { "(3.2.4) - ${file}: all.log_martians=1":
+    #3.2.4
+    sysctl { 'net.ipv4.conf.all.log_martians':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.all.log_martians=1',
-      match  => '^net.ipv4.conf.all.log_martians=1',
+      value  => '1',
     }
-    file_line { "(3.2.4) - ${file}: default.log_martians=1":
+    sysctl { 'net.ipv4.conf.default.log_martians':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.default.log_martians=1',
-      match  => '^net.ipv4.conf.default.log_martians=1',
+      value  => '1',
     }
-    file_line { "(3.2.5) - ${file}: icmp_echo_ignore_broadcasts=1":
+    #3.2.5
+    sysctl { 'net.ipv4.icmp_echo_ignore_broadcasts':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.icmp_echo_ignore_broadcasts=1',
-      match  => '^net.ipv4.icmp_echo_ignore_broadcasts',
+      value  => '1',
     }
-    file_line { "(3.2.6) - ${file}: icmp_ignore_bogus_error_responses=1":
+    #3.2.6
+    sysctl { 'net.ipv4.icmp_ignore_bogus_error_responses':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.icmp_ignore_bogus_error_responses=1',
-      match  => '^net.ipv4.icmp_ignore_bogus_error_responses',
+      value  => '1',
     }
-    file_line { "(3.2.7) - ${file}: all.rp_filter=1":
+    #3.2.7
+    sysctl { 'net.ipv4.conf.all.rp_filter':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.all.rp_filter=1',
-      match  => '^net.ipv4.conf.all.rp_filter',
+      value  => '1',
     }
-    file_line { "(3.2.7) - ${file}: default.rp_filter=1":
+    sysctl { 'net.ipv4.conf.default.rp_filter':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.default.rp_filter=1',
-      match  => '^net.ipv4.conf.default.rp_filter',
+      value  => '1',
     }
-    file_line { "(3.2.8) - ${file}: net.ipv4.tcp_syncookies=1":
+    #3.2.8
+    sysctl { 'net.ipv4.tcp_syncookies':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.tcp_syncookies=1',
-      match  => '^net.ipv4.tcp_syncookies',
+      value  => '1',
     }
   }
 }
