@@ -1,6 +1,6 @@
  {
       "name": "cmc-linux_cis",
-      "version": "1.1.6",
+      "version": "1.1.7",
       "author": "Conclusion Mission Critical",
       "license": "Apache-2.0",
       "summary": "CIS Benchmark Compliance for RHEL 7",
@@ -22,6 +22,7 @@
         { "name": "puppetlabs/stdlib", "version_requirement": ">= 2.2.0 < 5.0.0" },
         { "name": "herculesteam-augeasproviders_pam", "version_requirement": ">= 2.1.0 < 3.0.0" },
         { "name": "herculesteam-augeasproviders_grub", "version_requirement": ">= 3.0.0 < 4.0.0" },
-        { "name": "camptocamp-kmod", "version_requirement": "2.2.0" }
+        { "name": "camptocamp-kmod", "version_requirement": "2.2.0" },
+        { "name": "herculesteam-augeasproviders_sysctl", "version_requirement": "2.2.0" }
       ]
     }

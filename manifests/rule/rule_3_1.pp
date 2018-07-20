@@ -7,25 +7,20 @@ class cis_rhel7::rule::rule_3_1 (
   $enabled = $cis_rhel7::params::rule_3_1,
 ) {
   if $enabled {
-    $file = '/etc/sysctl.conf'
 
-    file_line { "(3.1.1) - ${file}: ip_forward=0":
+    #3.1.1
+    sysctl { 'net.ipv4.ip_forward':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.ip_forward=0',
-      match  => '^net.ipv4.ip_forward',
+      value  => '0',
     }
-    file_line { "(3.1.2) - ${file}: all.send_redirects=0":
+    #3.1.2
+    sysctl { 'net.ipv4.conf.all.send_redirects':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.all.send_redirects=0',
-      match  => '^net.ipv4.conf.all.send_redirects',
+      value  => '0',
     }
-    file_line { "(3.1.2) - ${file}: default.send_redirects=0":
+    sysctl { 'net.ipv4.conf.default.send_redirects':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv4.conf.default.send_redirects=0',
-      match  => '^net.ipv4.conf.default.send_redirects',
+      value  => '0',
     }
   }
 }

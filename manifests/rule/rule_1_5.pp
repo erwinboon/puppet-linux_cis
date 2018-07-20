@@ -7,8 +7,8 @@
 
 class cis_rhel7::rule::rule_1_5 {
   $file = '/etc/security/limits.conf'
-  $file_sysctl = '/etc/sysctl.conf'
 
+  #1.5.1
   file { "(1.5.1) - ${file} exists":
     ensure => file,
     path   => $file,
@@ -21,27 +21,20 @@ class cis_rhel7::rule::rule_1_5 {
     path   => $file,
     line   => '* hard core 0',
   }
-  file { "(1.5.1) - ${file_sysctl} exists":
-    ensure => file,
-    path   => $file_sysctl,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
-  }
-  file_line { "(1.5.1) - ${file_sysctl}: disable core dumps":
+  sysctl { 'fs.suid_dumpable':
     ensure => present,
-    path   => $file_sysctl,
-    line   => 'fs.suid_dumpable = 0',
+    value  => '0',
   }
+
   #1.5.2
-#  notify {"#NOT USED 1.5.2 Ensure XD/NX support is enabled": loglevel => "debug"}
+  #  notify {"#NOT USED 1.5.2 Ensure XD/NX support is enabled": loglevel => "debug"}
+  
   #1.5.3
-  file_line { "(1.5.3) - ${file_sysctl}: enable address space layout randomization (ASLR)":
-    ensure => present,
-    path   => $file_sysctl,
-    line   => 'kernel.randomize_va_space = 2',
-    match  => '^kernel.randomize_va_space',
+  sysctl { 'kernel.randomize_va_space':
+    ensure  => present,
+    value   => '2',
   }
+  
   #1.5.4
   service {'1.5.4 Ensure prelink is disabled':
     ensure => stopped,

@@ -9,35 +9,28 @@ class cis_rhel7::rule::rule_3_3 (
   $disable_ipv6_redirects = true,
   $disable_ipv6 = true
 ) {
-  $file = '/etc/sysctl.conf'
   $file_cis = '/etc/modprobe.d/CIS.conf'
 
   if $disable_ipv6_router_advertisements {
-    file_line { "(3.3.1) - ${file}: net.ipv6.conf.all.accept_ra=0":
+    #3.3.1
+    sysctl { 'net.ipv6.conf.all.accept_ra':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv6.conf.all.accept_ra=0',
-      match  => '^net.ipv6.conf.all.accept_ra',
+      value  => '0',
     }
-    file_line { "(3.3.1) - ${file}: net.ipv6.conf.default.accept_ra=0":
+    sysctl { 'net.ipv6.conf.default.accept_ra':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv6.conf.default.accept_ra=0',
-      match  => '^net.ipv6.conf.default.accept_ra',
+      value  => '0',
     }
   }
   if $disable_ipv6_redirects {
-    file_line { "(3.3.2) - ${file}: net.ipv6.conf.all.accept_redirects=0":
+    #3.3.2
+    sysctl { 'net.ipv6.conf.all.accept_redirects':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv6.conf.all.accept_redirects=0',
-      match  => '^net.ipv6.conf.all.accept_redirects',
+      value  => '0',
     }
-    file_line { "(3.3.2) - ${file}: net.ipv6.conf.default.accept_redirect=0":
+    sysctl { 'net.ipv6.conf.default.accept_redirects':
       ensure => present,
-      path   => $file,
-      line   => 'net.ipv6.conf.default.accept_redirects=0',
-      match  => '^net.ipv6.conf.default.accept_redirects',
+      value  => '0',
     }
   }
   kmod::option { 'ipv6':
