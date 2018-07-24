@@ -1,9 +1,9 @@
-# == Class: cis_rhel7::params
+# == Class: linux_cis::params
 #
 # This class defines parameters used by this module
 #
 
-class cis_rhel7::params (
+class linux_cis::params (
   #enable/disable specific rules
   $rule_3_1 = true,
   $rule_3_2 = true,
