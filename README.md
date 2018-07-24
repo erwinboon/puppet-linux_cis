@@ -59,14 +59,49 @@ These scripts generate output that gets captured by Puppet custom facts. The cus
 
 To see these custom facts, run "facter -p"
 
+## Hiera usage
+linux_cis::params::iprange: '10.4.6.220/32,127.0.0.1/32'
+linux_cis::cisruleapp: centos7
+linux_cis::cisrulesetversion: v2_2
+linux_cis::cisrules:
+  - rule_1_1
+  - rule_1_2
+  - rule_1_3
+  - rule_1_4
+  - rule_1_5
+  - rule_1_6
+  - rule_1_7
+  - rule_1_8
+  - rule_2_1
+  - rule_2_2
+  - rule_2_3
+  - rule_3_1
+  - rule_3_2
+  - rule_3_3
+  - rule_3_4
+  - rule_3_5
+  - rule_3_6
+  - rule_3_7
+  - rule_4_1
+  - rule_4_2
+  - rule_4_3
+  - rule_5_1
+  - rule_5_2
+  - rule_5_3
+  - rule_5_4
+  - rule_5_5
+  - rule_5_6
+  - rule_6_1
+  - rule_6_2
+
 
 ## Limitations
 
 This module was tested using Puppet 4.5 [PE 2016.2] (Note: it will not work on any Puppet version less than 4.0) as the Master (running on Ubuntu 14.04), tested on 
 
-1. RedHat 7 x64
+1. RedHat 6 & 7 x64
 
-2. CentOS 7 x64
+2. CentOS 6 & 7 x64
 
 ## Development
 
@@ -77,5 +112,4 @@ Testing is welcome, please log any issues here,
 
 ## Release Notes/Contributors/Etc. **Optional**
 
-cis_rhel7 module developed by perfecto25
-you can contact me via GitHub 
+cis_rhel7 module developed by perfecto25 and after that heavely modified into cis_linux
